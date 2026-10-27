@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wedding Invitation | Alex & Maya</title>
+
+  <!-- Google Fonts: Cormorant Garamond (Serif) & Montserrat (Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- AOS (Animate On Scroll) Open-Source Library -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --bg-cream: #FAF7F2;
+      --card-bg: #FFFFFF;
+      --gold: #C5A059;
+      --gold-dark: #A27B35;
+      --gold-light: #F4EBD9;
+      --emerald: #1B382B;
+      --emerald-dark: #12241C;
+      --text-main: #242424;
+      --text-muted: #6B7280;
+      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
+      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.08);
+      --border-gold: 1px solid rgba(197, 160, 89, 0.3);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      overflow-x: hidden;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Ambient Floating Petals Canvas */
+    #petal-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Floating Music Controller */
+    #music-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--emerald);
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+      z-index: 1000;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #music-btn:hover {
+      transform: scale(1.1);
+    }
+
+    #music-btn.playing svg {
+      animation: spinRecord 6s linear infinite;
+    }
+
+    @keyframes spinRecord {
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Interactive Wax-Seal Envelope Screen */
+    #envelope-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--emerald-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.8s ease, visibility 0.8s;
+      perspective: 1200px;
+    }
+
+    #envelope-screen.opened {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .envelope-box {
+      width: 320px;
+      height: 220px;
+      background: #E8E0D2;
+      border-radius: 6px;
+      position: relative;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease;
+    }
+
+    .envelope-box:hover {
+      transform: translateY(-4px);
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      border-left: 160px solid transparent;
+      border-right: 160px solid transparent;
+      border-top: 125px solid #DACAB2;
+      transform-origin: top;
+      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 3;
+    }
+
+    .envelope-box.unfold .envelope-flap {
+      transform: rotateX(180deg);
+      z-index: 1;
+    }
+
+    .wax-seal {
+      width: 58px;
+      height: 58px;
+      background: radial-gradient(circle at 35% 35%, #D4AF37, #8B6508);
+      border-radius: 50%;
+      position: absolute;
+      top: 92px;
+      z-index: 4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #FFF;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .envelope-prompt {
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      letter-spacing: 2px;
+      margin-top: 32px;
+      text-transform: uppercase;
+    }
+
+    /* Main Container */
+    main {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 50px 20px 100px;
+    }
+
+    /* Sacred Top Motif */
+    .sacred-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .ganesha-symbol {
+      width: 50px;
+      height: 50px;
+      fill: var(--gold);
+      margin: 0 auto 10px;
+      display: block;
+      filter: drop-shadow(0 2px 8px rgba(197, 160, 89, 0.35));
+    }
+
+    .shloka {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      color: var(--gold-dark);
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    /* Couple Intro */
+    header {
+      text-align: center;
+      padding: 20px 0 30px;
+    }
+
+    .monogram {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      letter-spacing: 6px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3.4rem;
+      font-weight: 400;
+      color: var(--emerald);
+      line-height: 1.1;
+      margin-bottom: 12px;
+    }
+
+    .invite-text {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Countdown */
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 36px 0;
+      text-align: center;
+    }
+
+    .time-card {
+      background: var(--card-bg);
+      padding: 16px 8px;
+      border-radius: 10px;
+      box-shadow: var(--shadow-sm);
+      border: var(--border-gold);
+    }
+
+    .time-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--emerald);
+    }
+
+    .time-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* Card Panels */
+    .panel {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 36px 28px;
+      margin: 32px 0;
+      box-shadow: var(--shadow-md);
+      border: var(--border-gold);
+      position: relative;
+    }
+
+    h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      color: var(--emerald);
+      text-align: center;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    h2::after {
+      content: "";
+      display: block;
+      width: 44px;
+      height: 2px;
+      background: var(--gold);
+      margin: 8px auto 0;
+    }
+
+    /* Event Itinerary Cards */
+    .event-card {
+      background: #FCFBF9;
+      border: var(--border-gold);
+      border-radius: 10px;
+      padding: 22px 20px;
+      margin-bottom: 18px;
+      transition: transform 0.2s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .event-tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--gold-dark);
+      margin-bottom: 4px;
+    }
+
+    .event-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: var(--emerald);
+      margin-bottom: 6px;
+    }
+
+    .event-meta {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .event-meta strong {
+      color: var(--text-main);
+    }
+
+    /* Action Buttons */
+    .btn-maps {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--gold-dark);
+      text-decoration: none;
+      border: 1px solid var(--gold);
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .btn-maps:hover {
+      background: var(--gold);
+      color: #FFF;
+    }
+
+    /* WhatsApp RSVP Direct Action */
+    .whatsapp-card {
+      text-align: center;
+      padding: 24px 16px;
+      background: #F4FAF5;
+      border-radius: 10px;
+      border: 1px solid #C8E6C9;
+      margin-bottom: 28px;
+    }
+
+    .whatsapp-card p {
+      font-size: 0.95rem;
+      color: #2E5A36;
+      margin-bottom: 16px;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #25D366;
+      color: #FFF;
+      text-decoration: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-whatsapp:hover {
+      background: #1EBE5D;
+      transform: translateY(-2px);
+    }
+
+    /* Form Styles */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--emerald);
+    }
+
+    input, select {
+      padding: 12px 14px;
+      border: 1px solid #D5D5D5;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--gold);
+    }
+
+    button.btn-submit {
+      background: var(--emerald);
+      color: #FFF;
+      padding: 15px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: background 0.2s, transform 0.1s;
+      margin-top: 6px;
+    }
+
+    button.btn-submit:hover {
+      background: var(--emerald-dark);
+      transform: translateY(-1px);
+    }
+
+    #rsvp-success {
+      display: none;
+      text-align: center;
+      padding: 20px;
+      background: #EDF7EE;
+      color: #1E6B24;
+      border-radius: 6px;
+      margin-top: 16px;
+      font-weight: 500;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      padding: 20px 0;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2.7rem; }
+      .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .panel { padding: 26px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Ambient Petals Background -->
+  <canvas id="petal-canvas"></canvas>
+
+  <!-- Floating Audio Player Disc -->
+  <div id="music-btn" onclick="toggleAudio()" title="Play / Pause Music">
+    <svg id="music-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M9 18V5l12-2v13"></path>
+      <circle cx="6" cy="18" r="3"></circle>
+      <circle cx="18" cy="16" r="3"></circle>
+    </svg>
+  </div>
+  <!-- Royalty-free gentle flute/instrumental audio stream -->
+  <audio id="bg-audio" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=meditative-rain-flute-112199.mp3"></audio>
+
+  <!-- Interactive Wax-Seal Envelope Screen -->
+  <div id="envelope-screen">
+    <div class="envelope-box" id="envelope" onclick="openInvitation()">
+      <div class="envelope-flap"></div>
+      <div class="wax-seal">A &bull; M</div>
+    </div>
+    <div class="envelope-prompt">Tap Seal to Open Invitation</div>
+  </div>
+
+  <main>
+    <!-- Sacred Auspicious Header -->
+    <div class="sacred-header" data-aos="fade-down" data-aos-duration="1000">
+      <!-- Minimalist Ganesha Motif -->
+      <svg class="ganesha-symbol" viewBox="0 0 24 24">
+        <path d="M12 2C8.5 2 6 4.5 6 7.5c0 2 1.2 3.8 3 4.7V17c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-4.8c1.8-.9 3-2.7 3-4.7C18 4.5 15.5 2 12 2zm-1 15h2v2h-2v-2zm1-5c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/>
+      </svg>
+      <div class="shloka">॥ श्री गणेशाय नमः ॥</div>
+    </div>
+
+    <!-- Couple Monogram & Invite Intro -->
+    <header data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+      <div class="monogram">A &bull; M</div>
+      <h1>Alex &amp; Maya</h1>
+      <p class="invite-text">
+        Together with our families, we joyfully invite you to celebrate our wedding ceremonies and new beginnings.
+      </p>
+    </header>
+
+    <!-- Countdown Timer -->
+    <div class="countdown-grid" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300">
+      <div class="time-card">
+        <div class="time-num" id="days">00</div>
+        <div class="time-label">Days</div>
+      </div>
+      <div class="time-card">
+        <div class="time-num" id="hours">00</div>
+        <div class="time-label">Hours</div>
+      </div>
+      <div class="time-card">
+        <div class="time-num" id="minutes">00</div>
+        <div class="time-label">Minutes</div>
+      </div>
+      <div class="time-card">
+        <div class="time-num" id="seconds">00</div>
+        <div class="time-label">Seconds</div>
+      </div>
+    </div>
+
+    <!-- Itinerary Section (City 3 Event Breakdown) -->
+    <section class="panel" data-aos="fade-up" data-aos-duration="1000">
+      <h2>Wedding Festivities</h2>
+
+      <!-- Card 1: Mehendi & Sangeet -->
+      <div class="event-card" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
+        <div class="event-tag">Celebration &bull; Day 1</div>
+        <div class="event-title">Sangeet &amp; Musical Night</div>
+        <div class="event-meta">
+          <div><strong>Date &amp; Time:</strong> Friday, Nov 27, 2026 &bull; 6:30 PM Onwards</div>
+          <div><strong>Venue:</strong> Grand Ballroom, The Leela Kovalam</div>
+          <div><strong>Dress Code:</strong> Festive Glamour / Indo-Western</div>
+        </div>
+        <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
+          📍 Open in Google Maps
+        </a>
+      </div>
+
+      <!-- Card 2: Muhurtham / Main Ceremony -->
+      <div class="event-card" data-aos="fade-up" data-aos-duration="900" data-aos-delay="200">
+        <div class="event-tag">Auspicious Ceremony &bull; Day 2</div>
+        <div class="event-title">The Wedding Vows (Muhurtham)</div>
+        <div class="event-meta">
+          <div><strong>Date &amp; Time:</strong> Saturday, Nov 28, 2026 &bull; 10:30 AM – 12:30 PM</div>
+          <div><strong>Venue:</strong> Ocean View Mandap, The Leela Kovalam</div>
+          <div><strong>Dress Code:</strong> Traditional Silk / Ethnic Formal</div>
+        </div>
+        <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
+          📍 Open in Google Maps
+        </a>
+      </div>
+
+      <!-- Card 3: Dinner Reception -->
+      <div class="event-card" data-aos="fade-up" data-aos-duration="900" data-aos-delay="300">
+        <div class="event-tag">Evening Gala &bull; Day 2</div>
+        <div class="event-title">Reception &amp; Dinner</div>
+        <div class="event-meta">
+          <div><strong>Date &amp; Time:</strong> Saturday, Nov 28, 2026 &bull; 7:00 PM Onwards</div>
+          <div><strong>Venue:</strong> Coconut Grove Lawns</div>
+          <div><strong>Dress Code:</strong> Formal Evening Attire</div>
+        </div>
+        <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
+          📍 Open in Google Maps
+        </a>
+      </div>
+    </section>
+
+    <!-- RSVP Section with WhatsApp Action -->
+    <section class="panel" data-aos="fade-up" data-aos-duration="1000">
+      <h2>Kindly RSVP</h2>
+
+      <!-- Option A: Direct WhatsApp Confirmation -->
+      <div class="whatsapp-card">
+        <p>Confirm attendance instantly with a single tap on WhatsApp:</p>
+        <!-- Replace 919876543210 with your wedding coordinator/personal mobile number -->
+        <a 
+          href="https://wa.me/919876543210?text=Hi%20Alex%20%26%20Maya!%20I%20will%20be%20attending%20your%20wedding.%20Name:%20%20%7C%20Number%20of%20Guests:%20" 
+          target="_blank" 
+          class="btn-whatsapp"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+          </svg>
+          RSVP on WhatsApp
+        </a>
+      </div>
+
+      <!-- Option B: Traditional Form -->
+      <form id="rsvp-form" onsubmit="handleFormSubmit(event)">
+        <div class="form-group">
+          <label for="name">Guest Name</label>
+          <input type="text" id="name" required placeholder="Your full name" />
+        </div>
+
+        <div class="form-group">
+          <label for="attending">Attending?</label>
+          <select id="attending" required>
+            <option value="yes">Accepts with pleasure</option>
+            <option value="no">Declines with regret</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="guests">Party Size</label>
+          <select id="guests">
+            <option value="1">1 Person</option>
+            <option value="2">2 Persons</option>
+            <option value="3+">Family (3+)</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-submit">Submit Details</button>
+      </form>
+
+      <div id="rsvp-success">
+        Thank you! Your response has been recorded. We look forward to seeing you!
+      </div>
+    </section>
+
+    <footer>
+      With Love, Alex &amp; Maya &bull; 2026
+    </footer>
+  </main>
+
+  <!-- AOS Script -->
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+  <script>
+    // 1. Initialize AOS Scroll Reveal
+    AOS.init({
+      once: true,
+      offset: 50,
+      duration: 800,
+      easing: 'ease-out-cubic'
+    });
+
+    // 2. Audio Player Logic
+    const audio = document.getElementById('bg-audio');
+    const musicBtn = document.getElementById('music-btn');
+    let isPlaying = false;
+
+    function toggleAudio() {
+      if (isPlaying) {
+        audio.pause();
+        musicBtn.classList.remove('playing');
+      } else {
+        audio.play().catch(e => console.log("Audio autoplay constrained"));
+        musicBtn.classList.add('playing');
+      }
+      isPlaying = !isPlaying;
+    }
+
+    // 3. Envelope Unfolding
+    function openInvitation() {
+      const envelope = document.getElementById('envelope');
+      const screen = document.getElementById('envelope-screen');
+
+      envelope.classList.add('unfold');
+
+      // Attempt to initiate gentle music on open
+      audio.play().then(() => {
+        isPlaying = true;
+        musicBtn.classList.add('playing');
+      }).catch(e => {
+        // Handled silently if browser requires explicit music-btn click
+      });
+
+      setTimeout(() => {
+        screen.classList.add('opened');
+        // Initial welcome confetti burst
+        confetti({
+          particleCount: 60,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#C5A059', '#1B382B', '#FFFFFF']
+        });
+        // Refresh AOS coordinates after unhiding screen
+        AOS.refresh();
+      }, 750);
+    }
+
+    // 4. Countdown Timer
+    const weddingDate = new Date("November 28, 2026 10:30:00").getTime();
+    function runCountdown() {
+      const now = new Date().getTime();
+      const diff = weddingDate - now;
+
+      if (diff > 0) {
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('days').innerText = String(d).padStart(2, '0');
+        document.getElementById('hours').innerText = String(h).padStart(2, '0');
+        document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+        document.getElementById('seconds').innerText = String(s).padStart(2, '0');
+      }
+    }
+    setInterval(runCountdown, 1000);
+    runCountdown();
+
+    // 5. Form RSVP Handler
+    function handleFormSubmit(e) {
+      e.preventDefault();
+
+      confetti({
+        particleCount: 100,
+        spread: 80,
+        origin: { y: 0.7 },
+        colors: ['#C5A059', '#1B382B', '#E8E0D2']
+      });
+
+      document.getElementById('rsvp-form').style.display = 'none';
+      document.getElementById('rsvp-success').style.display = 'block';
+    }
+
+    // 6. Ambient Canvas Floating Golden Dust / Petals
+    const canvas = document.getElementById('petal-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -canvas.height;
+        this.size = Math.random() * 5 + 3;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 0.8 + 0.4;
+        this.opacity = Math.random() * 0.4 + 0.2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.y > canvas.height + 10) this.reset();
+      }
+      draw() {
+        ctx.fillStyle = `rgba(197, 160, 89, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 30; i++) {
+      particles.push(new Particle());
+    }
+
+    function renderLoop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(renderLoop);
+    }
+    renderLoop();
+  </script>
+</body>
+</html>
