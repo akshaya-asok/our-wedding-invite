@@ -10,11 +10,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-  <!-- AOS (Animate On Scroll) Open-Source Library -->
+  <!-- AOS (Animate On Scroll) Library -->
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
   <!-- Confetti Library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Lenis Smooth Momentum Scrolling Library -->
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
   <style>
     :root {
@@ -22,14 +25,30 @@
       --card-bg: #FFFFFF;
       --gold: #C5A059;
       --gold-dark: #A27B35;
-      --gold-light: #F4EBD9;
       --emerald: #1B382B;
       --emerald-dark: #12241C;
       --text-main: #242424;
       --text-muted: #6B7280;
       --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
-      --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.08);
-      --border-gold: 1px solid rgba(197, 160, 89, 0.3);
+      --shadow-card: 0 -10px 30px rgba(0, 0, 0, 0.08);
+      --border-gold: 1px solid rgba(197, 160, 89, 0.35);
+    }
+
+    /* Lenis Smooth Scroll Configuration */
+    html.lenis {
+      height: auto;
+    }
+    .lenis.lenis-smooth {
+      scroll-behavior: auto !important;
+    }
+    .lenis.lenis-smooth [data-lenis-prevent] {
+      overscroll-behavior: contain;
+    }
+    .lenis.lenis-stopped {
+      overflow: hidden;
+    }
+    .lenis.lenis-scrolling iframe {
+      pointer-events: none;
     }
 
     * {
@@ -47,7 +66,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Ambient Floating Petals Canvas */
+    /* Ambient Floating Dust Canvas */
     #petal-canvas {
       position: fixed;
       top: 0;
@@ -58,7 +77,7 @@
       z-index: 1;
     }
 
-    /* Floating Music Controller */
+    /* Floating Music Disc */
     #music-btn {
       position: fixed;
       bottom: 24px;
@@ -75,7 +94,7 @@
       box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
       cursor: pointer;
       z-index: 1000;
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.3s ease;
     }
 
     #music-btn:hover {
@@ -90,7 +109,7 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Interactive Wax-Seal Envelope Screen */
+    /* Envelope Overlay */
     #envelope-screen {
       position: fixed;
       inset: 0;
@@ -100,7 +119,7 @@
       align-items: center;
       justify-content: center;
       z-index: 9999;
-      transition: opacity 0.8s ease, visibility 0.8s;
+      transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.85s;
       perspective: 1200px;
     }
 
@@ -184,15 +203,15 @@
       padding: 50px 20px 100px;
     }
 
-    /* Sacred Top Motif */
+    /* Sacred Header */
     .sacred-header {
       text-align: center;
       margin-bottom: 24px;
     }
 
     .ganesha-symbol {
-      width: 50px;
-      height: 50px;
+      width: 48px;
+      height: 48px;
       fill: var(--gold);
       margin: 0 auto 10px;
       display: block;
@@ -207,10 +226,9 @@
       letter-spacing: 1px;
     }
 
-    /* Couple Intro */
     header {
       text-align: center;
-      padding: 20px 0 30px;
+      padding: 10px 0 30px;
     }
 
     .monogram {
@@ -238,7 +256,7 @@
       line-height: 1.7;
     }
 
-    /* Countdown */
+    /* Countdown Grid */
     .countdown-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -270,23 +288,12 @@
       margin-top: 2px;
     }
 
-    /* Card Panels */
-    .panel {
-      background: var(--card-bg);
-      border-radius: 14px;
-      padding: 36px 28px;
-      margin: 32px 0;
-      box-shadow: var(--shadow-md);
-      border: var(--border-gold);
-      position: relative;
-    }
-
     h2 {
       font-family: 'Cormorant Garamond', serif;
       font-size: 2.2rem;
       color: var(--emerald);
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       font-weight: 600;
     }
 
@@ -299,18 +306,41 @@
       margin: 8px auto 0;
     }
 
-    /* Event Itinerary Cards */
-    .event-card {
-      background: #FCFBF9;
-      border: var(--border-gold);
-      border-radius: 10px;
-      padding: 22px 20px;
-      margin-bottom: 18px;
-      transition: transform 0.2s ease;
+    /* ===================================================
+       STACKING CARDS SYSTEM (City 3 Signature Interaction)
+       =================================================== */
+    .stacking-container {
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      margin: 40px 0 60px;
+      padding-bottom: 30px;
     }
 
-    .event-card:hover {
-      transform: translateY(-2px);
+    .stack-card {
+      position: sticky;
+      background: #FFFFFF;
+      border: var(--border-gold);
+      border-radius: 16px;
+      padding: 28px 24px;
+      box-shadow: var(--shadow-card);
+      margin-bottom: 30px;
+      transform-origin: top center;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Incremental sticky offsets so each card pins in view */
+    .stack-card:nth-child(1) {
+      top: 90px;
+      z-index: 10;
+    }
+    .stack-card:nth-child(2) {
+      top: 120px;
+      z-index: 11;
+    }
+    .stack-card:nth-child(3) {
+      top: 150px;
+      z-index: 12;
     }
 
     .event-tag {
@@ -324,23 +354,23 @@
 
     .event-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       font-weight: 600;
       color: var(--emerald);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .event-meta {
       font-size: 0.88rem;
       color: var(--text-muted);
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      line-height: 1.6;
     }
 
     .event-meta strong {
       color: var(--text-main);
     }
 
-    /* Action Buttons */
     .btn-maps {
       display: inline-flex;
       align-items: center;
@@ -355,6 +385,7 @@
       padding: 8px 14px;
       border-radius: 6px;
       transition: all 0.2s ease;
+      background: transparent;
     }
 
     .btn-maps:hover {
@@ -362,12 +393,21 @@
       color: #FFF;
     }
 
-    /* WhatsApp RSVP Direct Action */
+    /* Standard Panel for RSVP */
+    .panel {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 36px 28px;
+      margin: 40px 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      border: var(--border-gold);
+    }
+
     .whatsapp-card {
       text-align: center;
       padding: 24px 16px;
       background: #F4FAF5;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid #C8E6C9;
       margin-bottom: 28px;
     }
@@ -470,30 +510,30 @@
       text-align: center;
       color: var(--text-muted);
       font-size: 0.85rem;
-      padding: 20px 0;
+      padding: 30px 0;
     }
 
     @media (max-width: 600px) {
       h1 { font-size: 2.7rem; }
       .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .panel { padding: 26px 18px; }
+      .stack-card { padding: 22px 18px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Ambient Petals Background -->
+  <!-- Ambient Golden Sparkle Canvas -->
   <canvas id="petal-canvas"></canvas>
 
-  <!-- Floating Audio Player Disc -->
-  <div id="music-btn" onclick="toggleAudio()" title="Play / Pause Music">
+  <!-- Persistent Floating Music Disc -->
+  <div id="music-btn" onclick="toggleAudio()" title="Play / Pause Background Music">
     <svg id="music-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M9 18V5l12-2v13"></path>
       <circle cx="6" cy="18" r="3"></circle>
       <circle cx="18" cy="16" r="3"></circle>
     </svg>
   </div>
-  <!-- Royalty-free gentle flute/instrumental audio stream -->
   <audio id="bg-audio" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=meditative-rain-flute-112199.mp3"></audio>
 
   <!-- Interactive Wax-Seal Envelope Screen -->
@@ -508,7 +548,6 @@
   <main>
     <!-- Sacred Auspicious Header -->
     <div class="sacred-header" data-aos="fade-down" data-aos-duration="1000">
-      <!-- Minimalist Ganesha Motif -->
       <svg class="ganesha-symbol" viewBox="0 0 24 24">
         <path d="M12 2C8.5 2 6 4.5 6 7.5c0 2 1.2 3.8 3 4.7V17c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-4.8c1.8-.9 3-2.7 3-4.7C18 4.5 15.5 2 12 2zm-1 15h2v2h-2v-2zm1-5c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/>
       </svg>
@@ -516,7 +555,7 @@
     </div>
 
     <!-- Couple Monogram & Invite Intro -->
-    <header data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+    <header data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150">
       <div class="monogram">A &bull; M</div>
       <h1>Alex &amp; Maya</h1>
       <p class="invite-text">
@@ -525,7 +564,7 @@
     </header>
 
     <!-- Countdown Timer -->
-    <div class="countdown-grid" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="300">
+    <div class="countdown-grid" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="250">
       <div class="time-card">
         <div class="time-num" id="days">00</div>
         <div class="time-label">Days</div>
@@ -544,61 +583,61 @@
       </div>
     </div>
 
-    <!-- Itinerary Section (City 3 Event Breakdown) -->
-    <section class="panel" data-aos="fade-up" data-aos-duration="1000">
-      <h2>Wedding Festivities</h2>
-
-      <!-- Card 1: Mehendi & Sangeet -->
-      <div class="event-card" data-aos="fade-up" data-aos-duration="900" data-aos-delay="100">
-        <div class="event-tag">Celebration &bull; Day 1</div>
-        <div class="event-title">Sangeet &amp; Musical Night</div>
-        <div class="event-meta">
-          <div><strong>Date &amp; Time:</strong> Friday, Nov 27, 2026 &bull; 6:30 PM Onwards</div>
-          <div><strong>Venue:</strong> Grand Ballroom, The Leela Kovalam</div>
-          <div><strong>Dress Code:</strong> Festive Glamour / Indo-Western</div>
+    <!-- Sticky Stacking Events (City 3 Card Deck Effect) -->
+    <section>
+      <h2 data-aos="fade-up">Wedding Festivities</h2>
+      <div class="stacking-container">
+        <!-- Event 1 -->
+        <div class="stack-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="event-tag">Celebration &bull; Day 1</div>
+          <div class="event-title">Sangeet &amp; Musical Night</div>
+          <div class="event-meta">
+            <div><strong>Date &amp; Time:</strong> Friday, Nov 27, 2026 &bull; 6:30 PM Onwards</div>
+            <div><strong>Venue:</strong> Grand Ballroom, The Leela Kovalam</div>
+            <div><strong>Dress Code:</strong> Festive Glamour / Indo-Western</div>
+          </div>
+          <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
+            📍 Open in Google Maps
+          </a>
         </div>
-        <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
-          📍 Open in Google Maps
-        </a>
-      </div>
 
-      <!-- Card 2: Muhurtham / Main Ceremony -->
-      <div class="event-card" data-aos="fade-up" data-aos-duration="900" data-aos-delay="200">
-        <div class="event-tag">Auspicious Ceremony &bull; Day 2</div>
-        <div class="event-title">The Wedding Vows (Muhurtham)</div>
-        <div class="event-meta">
-          <div><strong>Date &amp; Time:</strong> Saturday, Nov 28, 2026 &bull; 10:30 AM – 12:30 PM</div>
-          <div><strong>Venue:</strong> Ocean View Mandap, The Leela Kovalam</div>
-          <div><strong>Dress Code:</strong> Traditional Silk / Ethnic Formal</div>
+        <!-- Event 2 -->
+        <div class="stack-card" data-aos="fade-up" data-aos-delay="200">
+          <div class="event-tag">Auspicious Ceremony &bull; Day 2</div>
+          <div class="event-title">The Wedding Vows (Muhurtham)</div>
+          <div class="event-meta">
+            <div><strong>Date &amp; Time:</strong> Saturday, Nov 28, 2026 &bull; 10:30 AM – 12:30 PM</div>
+            <div><strong>Venue:</strong> Ocean View Mandap, The Leela Kovalam</div>
+            <div><strong>Dress Code:</strong> Traditional Silk / Ethnic Formal</div>
+          </div>
+          <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
+            📍 Open in Google Maps
+          </a>
         </div>
-        <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
-          📍 Open in Google Maps
-        </a>
-      </div>
 
-      <!-- Card 3: Dinner Reception -->
-      <div class="event-card" data-aos="fade-up" data-aos-duration="900" data-aos-delay="300">
-        <div class="event-tag">Evening Gala &bull; Day 2</div>
-        <div class="event-title">Reception &amp; Dinner</div>
-        <div class="event-meta">
-          <div><strong>Date &amp; Time:</strong> Saturday, Nov 28, 2026 &bull; 7:00 PM Onwards</div>
-          <div><strong>Venue:</strong> Coconut Grove Lawns</div>
-          <div><strong>Dress Code:</strong> Formal Evening Attire</div>
+        <!-- Event 3 -->
+        <div class="stack-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="event-tag">Evening Gala &bull; Day 2</div>
+          <div class="event-title">Reception &amp; Dinner</div>
+          <div class="event-meta">
+            <div><strong>Date &amp; Time:</strong> Saturday, Nov 28, 2026 &bull; 7:00 PM Onwards</div>
+            <div><strong>Venue:</strong> Coconut Grove Lawns</div>
+            <div><strong>Dress Code:</strong> Formal Evening Attire</div>
+          </div>
+          <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
+            📍 Open in Google Maps
+          </a>
         </div>
-        <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
-          📍 Open in Google Maps
-        </a>
       </div>
     </section>
 
-    <!-- RSVP Section with WhatsApp Action -->
-    <section class="panel" data-aos="fade-up" data-aos-duration="1000">
+    <!-- RSVP Hub -->
+    <section class="panel" data-aos="fade-up">
       <h2>Kindly RSVP</h2>
 
-      <!-- Option A: Direct WhatsApp Confirmation -->
+      <!-- Instant WhatsApp Button -->
       <div class="whatsapp-card">
-        <p>Confirm attendance instantly with a single tap on WhatsApp:</p>
-        <!-- Replace 919876543210 with your wedding coordinator/personal mobile number -->
+        <p>Confirm attendance directly via WhatsApp:</p>
         <a 
           href="https://wa.me/919876543210?text=Hi%20Alex%20%26%20Maya!%20I%20will%20be%20attending%20your%20wedding.%20Name:%20%20%7C%20Number%20of%20Guests:%20" 
           target="_blank" 
@@ -611,7 +650,7 @@
         </a>
       </div>
 
-      <!-- Option B: Traditional Form -->
+      <!-- Traditional Form Submission -->
       <form id="rsvp-form" onsubmit="handleFormSubmit(event)">
         <div class="form-group">
           <label for="name">Guest Name</label>
@@ -639,7 +678,7 @@
       </form>
 
       <div id="rsvp-success">
-        Thank you! Your response has been recorded. We look forward to seeing you!
+        Thank you! Your response has been recorded. We look forward to celebrating together!
       </div>
     </section>
 
@@ -652,15 +691,28 @@
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
   <script>
-    // 1. Initialize AOS Scroll Reveal
+    // 1. Initialize Lenis Momentum Smooth Scrolling
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothTouch: true
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // 2. Initialize AOS (Animate On Scroll)
     AOS.init({
       once: true,
-      offset: 50,
+      offset: 40,
       duration: 800,
       easing: 'ease-out-cubic'
     });
 
-    // 2. Audio Player Logic
+    // 3. Audio Controller Logic
     const audio = document.getElementById('bg-audio');
     const musicBtn = document.getElementById('music-btn');
     let isPlaying = false;
@@ -670,13 +722,13 @@
         audio.pause();
         musicBtn.classList.remove('playing');
       } else {
-        audio.play().catch(e => console.log("Audio autoplay constrained"));
+        audio.play().catch(e => console.log("Audio waiting for user gesture"));
         musicBtn.classList.add('playing');
       }
       isPlaying = !isPlaying;
     }
 
-    // 3. Envelope Unfolding
+    // 4. Envelope Unfold with AOS.refreshHard()
     function openInvitation() {
       const envelope = document.getElementById('envelope');
       const screen = document.getElementById('envelope-screen');
@@ -688,24 +740,26 @@
         isPlaying = true;
         musicBtn.classList.add('playing');
       }).catch(e => {
-        // Handled silently if browser requires explicit music-btn click
+        // Handled silently if browser policy blocks autoplay
       });
 
       setTimeout(() => {
         screen.classList.add('opened');
+        
         // Initial welcome confetti burst
         confetti({
-          particleCount: 60,
+          particleCount: 65,
           spread: 70,
           origin: { y: 0.6 },
           colors: ['#C5A059', '#1B382B', '#FFFFFF']
         });
-        // Refresh AOS coordinates after unhiding screen
-        AOS.refresh();
+
+        // Recalculate coordinates now that the overlay is unhidden
+        AOS.refreshHard();
       }, 750);
     }
 
-    // 4. Countdown Timer
+    // 5. Live Countdown Timer
     const weddingDate = new Date("November 28, 2026 10:30:00").getTime();
     function runCountdown() {
       const now = new Date().getTime();
@@ -726,12 +780,12 @@
     setInterval(runCountdown, 1000);
     runCountdown();
 
-    // 5. Form RSVP Handler
+    // 6. Form RSVP Handler
     function handleFormSubmit(e) {
       e.preventDefault();
 
       confetti({
-        particleCount: 100,
+        particleCount: 110,
         spread: 80,
         origin: { y: 0.7 },
         colors: ['#C5A059', '#1B382B', '#E8E0D2']
@@ -741,26 +795,26 @@
       document.getElementById('rsvp-success').style.display = 'block';
     }
 
-    // 6. Ambient Canvas Floating Golden Dust / Petals
+    // 7. Ambient Golden Dust Canvas Animation
     const canvas = document.getElementById('petal-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
 
-    function resize() {
+    function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-    window.addEventListener('resize', resize);
-    resize();
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
 
     class Particle {
       constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * -canvas.height;
-        this.size = Math.random() * 5 + 3;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * 0.8 + 0.4;
+        this.size = Math.random() * 4.5 + 2.5;
+        this.speedX = Math.random() * 0.8 - 0.4;
+        this.speedY = Math.random() * 0.7 + 0.3;
         this.opacity = Math.random() * 0.4 + 0.2;
       }
       update() {
@@ -776,7 +830,7 @@
       }
     }
 
-    for (let i = 0; i < 30; i++) {
+    for (let i = 0; i < 28; i++) {
       particles.push(new Particle());
     }
 
