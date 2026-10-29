@@ -21,17 +21,13 @@
 
   <style>
     :root {
-      --bg-cream: #FAF7F2;
-      --card-bg: rgba(255, 255, 255, 0.86);
       --gold: #C5A059;
-      --gold-dark: #9A732C;
+      --gold-dark: #8E6B2A;
       --emerald: #1B382B;
       --emerald-dark: #12241C;
       --text-main: #222222;
-      --text-muted: #555B65;
-      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.06);
-      --shadow-card: 0 -8px 30px rgba(0, 0, 0, 0.1);
-      --border-gold: 1px solid rgba(197, 160, 89, 0.45);
+      --text-muted: #4A525D;
+      --border-gold: 1px solid rgba(197, 160, 89, 0.4);
     }
 
     /* Lenis Smooth Scroll Configuration */
@@ -59,34 +55,33 @@
 
     body {
       font-family: 'Montserrat', sans-serif;
-      background-color: var(--bg-cream);
       color: var(--text-main);
       overflow-x: hidden;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Fixed Backdrop Layer with Instant Loading Color & Top Alignment */
+    /* Fixed Backdrop Layer (Using backdrop.png) */
     #bg-backdrop {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #FAF7F2; 
-      background-image: url('backdrop.png'); 
+      background-color: #FAF7F2;
+      background-image: url('backdrop.png');
       background-size: cover;
       background-position: top center;
       background-repeat: no-repeat;
       z-index: 0;
     }
 
-    /* Subtle cream veil for perfect text legibility over illustration */
+    /* Soft veil to ensure text readability across the background */
     #bg-backdrop::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: rgba(250, 247, 242, 0.35);
+      background: rgba(250, 247, 242, 0.28);
     }
 
     /* Ambient Floating Dust Canvas */
@@ -217,31 +212,19 @@
       text-transform: uppercase;
     }
 
-    /* Main Content Container */
+    /* Main Content Layout - Seamless on Backdrop */
     main {
       position: relative;
       z-index: 2;
-      max-width: 680px;
+      max-width: 650px;
       margin: 0 auto;
-      padding: 40px 20px 100px;
-    }
-
-    /* Frosted Hero Box */
-    .hero-card {
-      background: rgba(255, 255, 255, 0.78);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border: var(--border-gold);
-      border-radius: 20px;
-      padding: 36px 24px;
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 30px;
+      padding: 60px 20px 120px;
+      text-align: center;
     }
 
     /* Sacred Header */
     .sacred-header {
-      text-align: center;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
 
     .ganesha-symbol {
@@ -250,83 +233,88 @@
       fill: var(--gold-dark);
       margin: 0 auto 8px;
       display: block;
-      filter: drop-shadow(0 2px 8px rgba(197, 160, 89, 0.35));
+      filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.8));
     }
 
     .shloka {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
-      color: var(--gold-dark);
+      font-size: 1.35rem;
+      color: var(--emerald);
       font-weight: 700;
       letter-spacing: 1px;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
     }
 
     header {
-      text-align: center;
+      margin-bottom: 40px;
     }
 
     .monogram {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem;
+      font-size: 1.8rem;
       color: var(--gold-dark);
       letter-spacing: 6px;
       margin-bottom: 8px;
       font-weight: 600;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
     }
 
     h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 3.2rem;
+      font-size: 3.4rem;
       font-weight: 600;
       color: var(--emerald);
       line-height: 1.15;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9);
     }
 
     .reception-badge {
       display: inline-block;
       text-transform: uppercase;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      letter-spacing: 2px;
+      letter-spacing: 2.5px;
       color: var(--gold-dark);
-      background: rgba(255, 255, 255, 0.7);
       border: 1px solid var(--gold);
-      padding: 4px 14px;
+      padding: 5px 16px;
       border-radius: 20px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(4px);
     }
 
     .invite-text {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--text-main);
-      max-width: 480px;
+      max-width: 500px;
       margin: 0 auto;
       line-height: 1.7;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
     }
 
-    /* Countdown Grid */
+    /* Countdown Grid (Directly on Page) */
     .countdown-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 12px;
-      margin: 36px 0;
+      margin: 40px 0;
       text-align: center;
     }
 
-    .time-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+    .time-item {
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
       padding: 16px 8px;
       border-radius: 12px;
-      box-shadow: var(--shadow-sm);
       border: var(--border-gold);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
     }
 
     .time-num {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2rem;
+      font-size: 2.1rem;
       font-weight: 700;
       color: var(--emerald);
     }
@@ -342,12 +330,12 @@
 
     h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2.3rem;
+      font-size: 2.4rem;
       color: var(--emerald);
       text-align: center;
-      margin-bottom: 28px;
+      margin: 50px 0 25px;
       font-weight: 700;
-      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9);
+      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9);
     }
 
     h2::after {
@@ -359,40 +347,22 @@
       margin: 8px auto 0;
     }
 
-    /* Stacking Cards */
-    .stacking-container {
+    /* Seamless Itinerary Section (No Cards) */
+    .itinerary-flow {
       display: flex;
       flex-direction: column;
-      position: relative;
-      margin: 30px 0 60px;
-      padding-bottom: 30px;
+      gap: 36px;
+      margin: 30px 0 50px;
+      text-align: center;
     }
 
-    .stack-card {
-      position: sticky;
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: var(--border-gold);
-      border-radius: 16px;
-      padding: 28px 24px;
-      box-shadow: var(--shadow-card);
-      margin-bottom: 30px;
-      transform-origin: top center;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .stack-card:nth-child(1) {
-      top: 90px;
-      z-index: 10;
-    }
-    .stack-card:nth-child(2) {
-      top: 120px;
-      z-index: 11;
-    }
-    .stack-card:nth-child(3) {
-      top: 150px;
-      z-index: 12;
+    .event-block {
+      background: rgba(255, 255, 255, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      padding: 24px 20px;
+      border-radius: 14px;
+      border: 1px solid rgba(197, 160, 89, 0.3);
     }
 
     .event-tag {
@@ -406,14 +376,14 @@
 
     .event-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.75rem;
+      font-size: 1.8rem;
       font-weight: 700;
       color: var(--emerald);
       margin-bottom: 8px;
     }
 
     .event-meta {
-      font-size: 0.9rem;
+      font-size: 0.92rem;
       color: var(--text-muted);
       margin-bottom: 16px;
       line-height: 1.6;
@@ -434,10 +404,10 @@
       color: var(--gold-dark);
       text-decoration: none;
       border: 1px solid var(--gold-dark);
-      padding: 8px 14px;
+      padding: 8px 16px;
       border-radius: 6px;
       transition: all 0.2s ease;
-      background: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.8);
     }
 
     .btn-maps:hover {
@@ -445,31 +415,30 @@
       color: #FFF;
     }
 
-    /* RSVP Panel */
-    .panel {
-      background: var(--card-bg);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+    /* Seamless RSVP Section */
+    .rsvp-section {
+      margin-top: 50px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 36px 24px;
       border-radius: 16px;
-      padding: 36px 28px;
-      margin: 40px 0;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       border: var(--border-gold);
     }
 
-    .whatsapp-card {
+    .whatsapp-box {
       text-align: center;
-      padding: 24px 16px;
-      background: rgba(244, 250, 245, 0.9);
+      padding: 22px 16px;
+      background: rgba(244, 250, 245, 0.85);
       border-radius: 12px;
       border: 1px solid #C8E6C9;
       margin-bottom: 28px;
     }
 
-    .whatsapp-card p {
+    .whatsapp-box p {
       font-size: 0.95rem;
       color: #2E5A36;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       font-weight: 500;
     }
 
@@ -500,6 +469,7 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
+      text-align: left;
     }
 
     .form-group {
@@ -510,7 +480,7 @@
 
     label {
       font-size: 0.8rem;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
       color: var(--emerald);
@@ -544,6 +514,7 @@
       text-transform: uppercase;
       transition: background 0.2s, transform 0.1s;
       margin-top: 6px;
+      width: 100%;
     }
 
     button.btn-submit:hover {
@@ -567,22 +538,20 @@
       color: var(--emerald);
       font-weight: 600;
       font-size: 0.9rem;
-      padding: 24px 0;
+      padding: 40px 0 20px;
       text-shadow: 0 1px 6px rgba(255, 255, 255, 0.9);
     }
 
     @media (max-width: 600px) {
-      h1 { font-size: 2.4rem; }
+      h1 { font-size: 2.6rem; }
       .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .panel { padding: 26px 18px; }
-      .stack-card { padding: 22px 18px; }
-      .hero-card { padding: 28px 16px; }
+      main { padding: 40px 16px 80px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Fixed Pastel Garden Backdrop (12345.png) -->
+  <!-- Fixed Backdrop Layer -->
   <div id="bg-backdrop"></div>
 
   <!-- Ambient Golden Dust Canvas -->
@@ -596,7 +565,8 @@
       <circle cx="18" cy="16" r="3"></circle>
     </svg>
   </div>
- <audio id="bg-audio" loop src="song.mp3"></audio>
+  <audio id="bg-audio" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=meditative-rain-flute-112199.mp3"></audio>
+
   <!-- Interactive Wax-Seal Envelope Screen -->
   <div id="envelope-screen">
     <div class="envelope-box" id="envelope" onclick="openInvitation()">
@@ -607,51 +577,50 @@
   </div>
 
   <main>
-    <!-- Hero Card Wrapping Sacred Header & Couple Names -->
-    <div class="hero-card" data-aos="fade-up" data-aos-duration="1000">
-      <div class="sacred-header">
-        <svg class="ganesha-symbol" viewBox="0 0 24 24">
-          <path d="M12 2C8.5 2 6 4.5 6 7.5c0 2 1.2 3.8 3 4.7V17c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-4.8c1.8-.9 3-2.7 3-4.7C18 4.5 15.5 2 12 2zm-1 15h2v2h-2v-2zm1-5c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/>
-        </svg>
-        <div class="shloka">॥ श्री गणेशाय नमः ॥</div>
-      </div>
-
-      <header>
-        <div class="monogram">A &bull; A</div>
-        <div class="reception-badge">Wedding Reception</div>
-        <h1>Akshaya<br>&amp; Anand Mahadevan</h1>
-        <p class="invite-text">
-          Together with our families, we cordially invite you to join us in celebrating our wedding reception evening with dinner, music, and cherished blessings.
-        </p>
-      </header>
+    <!-- Sacred Auspicious Header -->
+    <div class="sacred-header" data-aos="fade-down" data-aos-duration="1000">
+      <svg class="ganesha-symbol" viewBox="0 0 24 24">
+        <path d="M12 2C8.5 2 6 4.5 6 7.5c0 2 1.2 3.8 3 4.7V17c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-4.8c1.8-.9 3-2.7 3-4.7C18 4.5 15.5 2 12 2zm-1 15h2v2h-2v-2zm1-5c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/>
+      </svg>
+      <div class="shloka">॥ श्री गणेशाय नमः ॥</div>
     </div>
 
-    <!-- Countdown Timer (January 23, 2027 at 4:30 PM) -->
-    <div class="countdown-grid" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="200">
-      <div class="time-card">
+    <!-- Couple Monogram & Title -->
+    <header data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150">
+      <div class="monogram">A &bull; A</div>
+      <div class="reception-badge">Wedding Reception</div>
+      <h1>Akshaya<br>&amp; Anand Mahadevan</h1>
+      <p class="invite-text">
+        Together with our families, we cordially invite you to join us in celebrating our wedding reception evening with dinner, music, and cherished blessings.
+      </p>
+    </header>
+
+    <!-- Countdown Timer -->
+    <div class="countdown-grid" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="250">
+      <div class="time-item">
         <div class="time-num" id="days">00</div>
         <div class="time-label">Days</div>
       </div>
-      <div class="time-card">
+      <div class="time-item">
         <div class="time-num" id="hours">00</div>
         <div class="time-label">Hours</div>
       </div>
-      <div class="time-card">
+      <div class="time-item">
         <div class="time-num" id="minutes">00</div>
         <div class="time-label">Minutes</div>
       </div>
-      <div class="time-card">
+      <div class="time-item">
         <div class="time-num" id="seconds">00</div>
         <div class="time-label">Seconds</div>
       </div>
     </div>
 
-    <!-- Itinerary / Event Breakdown -->
+    <!-- Itinerary Flow (Seamless on Page) -->
     <section>
       <h2 data-aos="fade-up">Reception Evening Program</h2>
-      <div class="stacking-container">
-        <!-- Event 1: Welcome & Refreshments -->
-        <div class="stack-card" data-aos="fade-up" data-aos-delay="100">
+      <div class="itinerary-flow">
+        <!-- Event 1 -->
+        <div class="event-block" data-aos="fade-up" data-aos-delay="100">
           <div class="event-tag">Evening Program &bull; Step 1</div>
           <div class="event-title">Guest Welcome &amp; Refreshments</div>
           <div class="event-meta">
@@ -664,8 +633,8 @@
           </a>
         </div>
 
-        <!-- Event 2: Couple Stage & Felicitations -->
-        <div class="stack-card" data-aos="fade-up" data-aos-delay="200">
+        <!-- Event 2 -->
+        <div class="event-block" data-aos="fade-up" data-aos-delay="200">
           <div class="event-tag">Celebration &bull; Step 2</div>
           <div class="event-title">Stage Blessings &amp; Greetings</div>
           <div class="event-meta">
@@ -678,8 +647,8 @@
           </a>
         </div>
 
-        <!-- Event 3: Dinner Gala -->
-        <div class="stack-card" data-aos="fade-up" data-aos-delay="300">
+        <!-- Event 3 -->
+        <div class="event-block" data-aos="fade-up" data-aos-delay="300">
           <div class="event-tag">Celebration &bull; Step 3</div>
           <div class="event-title">Grand Reception Feast</div>
           <div class="event-meta">
@@ -695,11 +664,10 @@
     </section>
 
     <!-- RSVP Section -->
-    <section class="panel" data-aos="fade-up">
+    <section class="rsvp-section" data-aos="fade-up">
       <h2>Kindly RSVP</h2>
 
-      <!-- Instant WhatsApp Button -->
-      <div class="whatsapp-card">
+      <div class="whatsapp-box">
         <p>Confirm attendance directly via WhatsApp:</p>
         <a 
           href="https://wa.me/919876543210?text=Hi%20Akshaya%20%26%20Anand!%20I%20will%20be%20attending%20your%20wedding%20reception.%20Name:%20%20%7C%20Number%20of%20Guests:%20" 
@@ -713,7 +681,6 @@
         </a>
       </div>
 
-      <!-- Traditional Form Submission -->
       <form id="rsvp-form" onsubmit="handleFormSubmit(event)">
         <div class="form-group">
           <label for="name">Guest Name</label>
