@@ -81,7 +81,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: rgba(250, 247, 242, 0.28);
+      background: rgba(250, 247, 242, 0.35);
     }
 
     /* Ambient Floating Dust Canvas */
@@ -212,7 +212,7 @@
       text-transform: uppercase;
     }
 
-    /* Main Content Layout - Seamless on Backdrop */
+    /* Main Content Layout */
     main {
       position: relative;
       z-index: 2;
@@ -293,7 +293,7 @@
       text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
     }
 
-    /* Countdown Grid (Directly on Page) */
+    /* Countdown Grid */
     .countdown-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -347,7 +347,7 @@
       margin: 8px auto 0;
     }
 
-    /* Seamless Itinerary Section (No Cards) */
+    /* Itinerary Flow */
     .itinerary-flow {
       display: flex;
       flex-direction: column;
@@ -415,7 +415,7 @@
       color: #FFF;
     }
 
-    /* Seamless RSVP Section */
+    /* RSVP Section */
     .rsvp-section {
       margin-top: 50px;
       background: rgba(255, 255, 255, 0.65);
@@ -557,7 +557,7 @@
   <!-- Ambient Golden Dust Canvas -->
   <canvas id="petal-canvas"></canvas>
 
-  <!-- Persistent Floating Music Disc -->
+  <!-- Persistent Floating Music Disc & Custom Song Source -->
   <div id="music-btn" onclick="toggleAudio()" title="Play / Pause Background Music">
     <svg id="music-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M9 18V5l12-2v13"></path>
@@ -566,6 +566,7 @@
     </svg>
   </div>
   <audio id="bg-audio" loop src="song.mp3"></audio>
+
   <!-- Interactive Wax-Seal Envelope Screen -->
   <div id="envelope-screen">
     <div class="envelope-box" id="envelope" onclick="openInvitation()">
@@ -614,7 +615,7 @@
       </div>
     </div>
 
-    <!-- Itinerary Flow (Seamless on Page) -->
+    <!-- Itinerary Flow -->
     <section>
       <h2 data-aos="fade-up">Reception Evening Program</h2>
       <div class="itinerary-flow">
