@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wedding Reception Invitation | Akshaya & Anand Mahadevan</title>
+  <title>Wedding Reception | Akshaya & Anand Mahadevan</title>
 
   <!-- Google Fonts: Cormorant Garamond (Serif) & Montserrat (Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,16 +22,16 @@
   <style>
     :root {
       --bg-cream: #FAF7F2;
-      --card-bg: #FFFFFF;
+      --card-bg: rgba(255, 255, 255, 0.86);
       --gold: #C5A059;
-      --gold-dark: #A27B35;
+      --gold-dark: #9A732C;
       --emerald: #1B382B;
       --emerald-dark: #12241C;
-      --text-main: #242424;
-      --text-muted: #6B7280;
-      --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.04);
-      --shadow-card: 0 -10px 30px rgba(0, 0, 0, 0.08);
-      --border-gold: 1px solid rgba(197, 160, 89, 0.35);
+      --text-main: #222222;
+      --text-muted: #555B65;
+      --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.06);
+      --shadow-card: 0 -8px 30px rgba(0, 0, 0, 0.1);
+      --border-gold: 1px solid rgba(197, 160, 89, 0.45);
     }
 
     /* Lenis Smooth Scroll Configuration */
@@ -64,6 +64,30 @@
       overflow-x: hidden;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===================================================
+       1. PASTEL GARDEN BACKDROP LAYER (Added Here)
+       =================================================== */
+    #bg-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('backdrop.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      z-index: 0;
+    }
+
+    /* Subtle cream veil so text stays legible against the illustration */
+    #bg-backdrop::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(250, 247, 242, 0.35);
     }
 
     /* Ambient Floating Dust Canvas */
@@ -194,26 +218,38 @@
       text-transform: uppercase;
     }
 
-    /* Main Container */
+    /* Main Content Container */
     main {
       position: relative;
       z-index: 2;
       max-width: 680px;
       margin: 0 auto;
-      padding: 50px 20px 100px;
+      padding: 40px 20px 100px;
+    }
+
+    /* Frosted Hero Box so Couple Names Pop Over the Illustration */
+    .hero-card {
+      background: rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: var(--border-gold);
+      border-radius: 20px;
+      padding: 36px 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 30px;
     }
 
     /* Sacred Header */
     .sacred-header {
       text-align: center;
-      margin-bottom: 24px;
+      margin-bottom: 16px;
     }
 
     .ganesha-symbol {
       width: 48px;
       height: 48px;
-      fill: var(--gold);
-      margin: 0 auto 10px;
+      fill: var(--gold-dark);
+      margin: 0 auto 8px;
       display: block;
       filter: drop-shadow(0 2px 8px rgba(197, 160, 89, 0.35));
     }
@@ -222,35 +258,49 @@
       font-family: 'Cormorant Garamond', serif;
       font-size: 1.3rem;
       color: var(--gold-dark);
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 1px;
     }
 
     header {
       text-align: center;
-      padding: 10px 0 30px;
     }
 
     .monogram {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      color: var(--gold);
+      font-size: 1.7rem;
+      color: var(--gold-dark);
       letter-spacing: 6px;
       margin-bottom: 8px;
+      font-weight: 600;
     }
 
     h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 3.4rem;
-      font-weight: 400;
+      font-size: 3.2rem;
+      font-weight: 600;
       color: var(--emerald);
-      line-height: 1.1;
+      line-height: 1.15;
       margin-bottom: 12px;
+    }
+
+    .reception-badge {
+      display: inline-block;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: var(--gold-dark);
+      background: rgba(255, 255, 255, 0.7);
+      border: 1px solid var(--gold);
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
     }
 
     .invite-text {
       font-size: 0.95rem;
-      color: var(--text-muted);
+      color: var(--text-main);
       max-width: 480px;
       margin: 0 auto;
       line-height: 1.7;
@@ -267,8 +317,10 @@
 
     .time-card {
       background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
       padding: 16px 8px;
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: var(--shadow-sm);
       border: var(--border-gold);
     }
@@ -286,15 +338,17 @@
       letter-spacing: 1px;
       color: var(--text-muted);
       margin-top: 2px;
+      font-weight: 600;
     }
 
     h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 2.2rem;
+      font-size: 2.3rem;
       color: var(--emerald);
       text-align: center;
       margin-bottom: 28px;
-      font-weight: 600;
+      font-weight: 700;
+      text-shadow: 0 2px 10px rgba(255, 255, 255, 0.9);
     }
 
     h2::after {
@@ -302,24 +356,24 @@
       display: block;
       width: 44px;
       height: 2px;
-      background: var(--gold);
+      background: var(--gold-dark);
       margin: 8px auto 0;
     }
 
-    /* ===================================================
-       STACKING CARDS SYSTEM (City 3 Signature Interaction)
-       =================================================== */
+    /* Stacking Cards */
     .stacking-container {
       display: flex;
       flex-direction: column;
       position: relative;
-      margin: 40px 0 60px;
+      margin: 30px 0 60px;
       padding-bottom: 30px;
     }
 
     .stack-card {
       position: sticky;
-      background: #FFFFFF;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: var(--border-gold);
       border-radius: 16px;
       padding: 28px 24px;
@@ -329,7 +383,6 @@
       transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    /* Incremental sticky offsets so each card pins in view */
     .stack-card:nth-child(1) {
       top: 90px;
       z-index: 10;
@@ -345,7 +398,7 @@
 
     .event-tag {
       font-size: 0.75rem;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 1.5px;
       color: var(--gold-dark);
@@ -354,14 +407,14 @@
 
     .event-title {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.7rem;
-      font-weight: 600;
+      font-size: 1.75rem;
+      font-weight: 700;
       color: var(--emerald);
       margin-bottom: 8px;
     }
 
     .event-meta {
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
       margin-bottom: 16px;
       line-height: 1.6;
@@ -381,32 +434,34 @@
       letter-spacing: 0.8px;
       color: var(--gold-dark);
       text-decoration: none;
-      border: 1px solid var(--gold);
+      border: 1px solid var(--gold-dark);
       padding: 8px 14px;
       border-radius: 6px;
       transition: all 0.2s ease;
-      background: transparent;
+      background: rgba(255, 255, 255, 0.6);
     }
 
     .btn-maps:hover {
-      background: var(--gold);
+      background: var(--gold-dark);
       color: #FFF;
     }
 
-    /* Standard Panel for RSVP */
+    /* RSVP Panel */
     .panel {
       background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border-radius: 16px;
       padding: 36px 28px;
       margin: 40px 0;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
       border: var(--border-gold);
     }
 
     .whatsapp-card {
       text-align: center;
       padding: 24px 16px;
-      background: #F4FAF5;
+      background: rgba(244, 250, 245, 0.9);
       border-radius: 12px;
       border: 1px solid #C8E6C9;
       margin-bottom: 28px;
@@ -416,6 +471,7 @@
       font-size: 0.95rem;
       color: #2E5A36;
       margin-bottom: 16px;
+      font-weight: 500;
     }
 
     .btn-whatsapp {
@@ -463,16 +519,17 @@
 
     input, select {
       padding: 12px 14px;
-      border: 1px solid #D5D5D5;
+      border: 1px solid #C5C5C5;
       border-radius: 6px;
       font-family: inherit;
       font-size: 0.95rem;
+      background: rgba(255, 255, 255, 0.95);
       outline: none;
       transition: border-color 0.2s;
     }
 
     input:focus, select:focus {
-      border-color: var(--gold);
+      border-color: var(--gold-dark);
     }
 
     button.btn-submit {
@@ -508,22 +565,30 @@
 
     footer {
       text-align: center;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      padding: 30px 0;
+      color: var(--emerald);
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 24px 0;
+      text-shadow: 0 1px 6px rgba(255, 255, 255, 0.9);
     }
 
     @media (max-width: 600px) {
-      h1 { font-size: 2.7rem; }
+      h1 { font-size: 2.4rem; }
       .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
       .panel { padding: 26px 18px; }
       .stack-card { padding: 22px 18px; }
+      .hero-card { padding: 28px 16px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Ambient Golden Sparkle Canvas -->
+  <!-- ===================================================
+       2. FIXED BACKDROP ELEMENT (Added Right After <body>)
+       =================================================== -->
+  <div id="bg-backdrop"></div>
+
+  <!-- Ambient Golden Dust Canvas -->
   <canvas id="petal-canvas"></canvas>
 
   <!-- Persistent Floating Music Disc -->
@@ -540,31 +605,33 @@
   <div id="envelope-screen">
     <div class="envelope-box" id="envelope" onclick="openInvitation()">
       <div class="envelope-flap"></div>
-      <div class="wax-seal">A &bull; M</div>
+      <div class="wax-seal">A &bull; A</div>
     </div>
     <div class="envelope-prompt">Tap Seal to Open Invitation</div>
   </div>
 
   <main>
-    <!-- Sacred Auspicious Header -->
-    <div class="sacred-header" data-aos="fade-down" data-aos-duration="1000">
-      <svg class="ganesha-symbol" viewBox="0 0 24 24">
-        <path d="M12 2C8.5 2 6 4.5 6 7.5c0 2 1.2 3.8 3 4.7V17c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-4.8c1.8-.9 3-2.7 3-4.7C18 4.5 15.5 2 12 2zm-1 15h2v2h-2v-2zm1-5c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/>
-      </svg>
-      <div class="shloka"></div>
+    <!-- Hero Card Wrapping Sacred Header & Couple Names -->
+    <div class="hero-card" data-aos="fade-up" data-aos-duration="1000">
+      <div class="sacred-header">
+        <svg class="ganesha-symbol" viewBox="0 0 24 24">
+          <path d="M12 2C8.5 2 6 4.5 6 7.5c0 2 1.2 3.8 3 4.7V17c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-4.8c1.8-.9 3-2.7 3-4.7C18 4.5 15.5 2 12 2zm-1 15h2v2h-2v-2zm1-5c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/>
+        </svg>
+        <div class="shloka">॥ श्री गणेशाय नमः ॥</div>
+      </div>
+
+      <header>
+        <div class="monogram">A &bull; A</div>
+        <div class="reception-badge">Wedding Reception</div>
+        <h1>Akshaya<br>&amp; Anand Mahadevan</h1>
+        <p class="invite-text">
+          Together with our families, we cordially invite you to join us in celebrating our wedding reception evening with dinner, music, and cherished blessings.
+        </p>
+      </header>
     </div>
 
-    <!-- Couple Monogram & Invite Intro -->
-    <header data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150">
-      <div class="monogram">A &bull; A</div>
-      <h1>Anand Mahadevan &amp; Akshaya</h1>
-      <p class="invite-text">
-        Together with our families, we joyfully invite you to celebrate our wedding reception and new beginnings.
-      </p>
-    </header>
-
-    <!-- Countdown Timer -->
-    <div class="countdown-grid" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="250">
+    <!-- Countdown Timer (January 23, 2027 at 4:30 PM) -->
+    <div class="countdown-grid" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="200">
       <div class="time-card">
         <div class="time-num" id="days">00</div>
         <div class="time-label">Days</div>
@@ -583,55 +650,55 @@
       </div>
     </div>
 
-    <!-- Sticky Stacking Events (City 3 Card Deck Effect) -->
+    <!-- Itinerary / Event Breakdown -->
     <section>
-      <h2 data-aos="fade-up">Wedding Festivities</h2>
+      <h2 data-aos="fade-up">Reception Evening Program</h2>
       <div class="stacking-container">
-        <!-- Event 1 -->
+        <!-- Event 1: Welcome & Refreshments -->
         <div class="stack-card" data-aos="fade-up" data-aos-delay="100">
-          <div class="event-tag">Celebration &bull; Day 1</div>
-          <div class="event-title">Sangeet &amp; Musical Night</div>
+          <div class="event-tag">Evening Program &bull; Step 1</div>
+          <div class="event-title">Guest Welcome &amp; Refreshments</div>
           <div class="event-meta">
-            <div><strong>Date &amp; Time:</strong> Friday, Nov 27, 2026 &bull; 6:30 PM Onwards</div>
-            <div><strong>Venue:</strong> Grand Ballroom, The Leela Kovalam</div>
-            <div><strong>Dress Code:</strong> Festive Glamour / Indo-Western</div>
+            <div><strong>Date &amp; Time:</strong> Saturday, January 23, 2027 &bull; 4:30 PM Onwards</div>
+            <div><strong>Venue:</strong> Grand Celebration Hall</div>
+            <div><strong>Dress Code:</strong> Traditional / Formal Evening Wear</div>
           </div>
-          <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
+          <a href="https://maps.google.com/?q=Wedding+Reception+Venue" target="_blank" class="btn-maps">
             📍 Open in Google Maps
           </a>
         </div>
 
-        <!-- Event 2 -->
+        <!-- Event 2: Couple Stage & Felicitations -->
         <div class="stack-card" data-aos="fade-up" data-aos-delay="200">
-          <div class="event-tag">Auspicious Ceremony &bull; Day 2</div>
-          <div class="event-title">The Wedding Vows (Muhurtham)</div>
+          <div class="event-tag">Celebration &bull; Step 2</div>
+          <div class="event-title">Stage Blessings &amp; Greetings</div>
           <div class="event-meta">
-            <div><strong>Date &amp; Time:</strong> Saturday, Nov 28, 2026 &bull; 10:30 AM – 12:30 PM</div>
-            <div><strong>Venue:</strong> Ocean View Mandap, The Leela Kovalam</div>
-            <div><strong>Dress Code:</strong> Traditional Silk / Ethnic Formal</div>
+            <div><strong>Time:</strong> 5:30 PM Onwards</div>
+            <div><strong>Venue:</strong> Main Auditorium Stage</div>
+            <div><strong>Highlights:</strong> Family felicitation, photo opportunities, and musical interludes</div>
           </div>
-          <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
+          <a href="https://maps.google.com/?q=Wedding+Reception+Venue" target="_blank" class="btn-maps">
             📍 Open in Google Maps
           </a>
         </div>
 
-        <!-- Event 3 -->
+        <!-- Event 3: Dinner Gala -->
         <div class="stack-card" data-aos="fade-up" data-aos-delay="300">
-          <div class="event-tag">Evening Gala &bull; Day 2</div>
-          <div class="event-title">Reception &amp; Dinner</div>
+          <div class="event-tag">Celebration &bull; Step 3</div>
+          <div class="event-title">Grand Reception Feast</div>
           <div class="event-meta">
-            <div><strong>Date &amp; Time:</strong> Saturday, Nov 28, 2026 &bull; 7:00 PM Onwards</div>
-            <div><strong>Venue:</strong> Coconut Grove Lawns</div>
-            <div><strong>Dress Code:</strong> Formal Evening Attire</div>
+            <div><strong>Time:</strong> 7:30 PM Onwards</div>
+            <div><strong>Venue:</strong> The Banquet Lawns</div>
+            <div><strong>Menu:</strong> Traditional multi-course feast and dessert buffet</div>
           </div>
-          <a href="https://maps.google.com/?q=The+Leela+Kovalam" target="_blank" class="btn-maps">
+          <a href="https://maps.google.com/?q=Wedding+Reception+Venue" target="_blank" class="btn-maps">
             📍 Open in Google Maps
           </a>
         </div>
       </div>
     </section>
 
-    <!-- RSVP Hub -->
+    <!-- RSVP Section -->
     <section class="panel" data-aos="fade-up">
       <h2>Kindly RSVP</h2>
 
@@ -639,207 +706,9 @@
       <div class="whatsapp-card">
         <p>Confirm attendance directly via WhatsApp:</p>
         <a 
-          href="https://wa.me/919876543210?text=Hi%20Alex%20%26%20Maya!%20I%20will%20be%20attending%20your%20wedding.%20Name:%20%20%7C%20Number%20of%20Guests:%20" 
+          href="https://wa.me/919876543210?text=Hi%20Akshaya%20%26%20Anand!%20I%20will%20be%20attending%20your%20wedding%20reception.%20Name:%20%20%7C%20Number%20of%20Guests:%20" 
           target="_blank" 
           class="btn-whatsapp"
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
-          </svg>
-          RSVP on WhatsApp
-        </a>
-      </div>
-
-      <!-- Traditional Form Submission -->
-      <form id="rsvp-form" onsubmit="handleFormSubmit(event)">
-        <div class="form-group">
-          <label for="name">Guest Name</label>
-          <input type="text" id="name" required placeholder="Your full name" />
-        </div>
-
-        <div class="form-group">
-          <label for="attending">Attending?</label>
-          <select id="attending" required>
-            <option value="yes">Accepts with pleasure</option>
-            <option value="no">Declines with regret</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="guests">Party Size</label>
-          <select id="guests">
-            <option value="1">1 Person</option>
-            <option value="2">2 Persons</option>
-            <option value="3+">Family (3+)</option>
-          </select>
-        </div>
-
-        <button type="submit" class="btn-submit">Submit Details</button>
-      </form>
-
-      <div id="rsvp-success">
-        Thank you! Your response has been recorded. We look forward to celebrating together!
-      </div>
-    </section>
-
-    <footer>
-      With Love, Maddy &amp; Batgirl &bull; 2026
-    </footer>
-  </main>
-
-  <!-- AOS Script -->
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-
-  <script>
-    // 1. Initialize Lenis Momentum Smooth Scrolling
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothTouch: true
-    });
-
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // 2. Initialize AOS (Animate On Scroll)
-    AOS.init({
-      once: true,
-      offset: 40,
-      duration: 800,
-      easing: 'ease-out-cubic'
-    });
-
-    // 3. Audio Controller Logic
-    const audio = document.getElementById('bg-audio');
-    const musicBtn = document.getElementById('music-btn');
-    let isPlaying = false;
-
-    function toggleAudio() {
-      if (isPlaying) {
-        audio.pause();
-        musicBtn.classList.remove('playing');
-      } else {
-        audio.play().catch(e => console.log("Audio waiting for user gesture"));
-        musicBtn.classList.add('playing');
-      }
-      isPlaying = !isPlaying;
-    }
-
-    // 4. Envelope Unfold with AOS.refreshHard()
-    function openInvitation() {
-      const envelope = document.getElementById('envelope');
-      const screen = document.getElementById('envelope-screen');
-
-      envelope.classList.add('unfold');
-
-      // Attempt to initiate gentle music on open
-      audio.play().then(() => {
-        isPlaying = true;
-        musicBtn.classList.add('playing');
-      }).catch(e => {
-        // Handled silently if browser policy blocks autoplay
-      });
-
-      setTimeout(() => {
-        screen.classList.add('opened');
-        
-        // Initial welcome confetti burst
-        confetti({
-          particleCount: 65,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#C5A059', '#1B382B', '#FFFFFF']
-        });
-
-        // Recalculate coordinates now that the overlay is unhidden
-        AOS.refreshHard();
-      }, 750);
-    }
-
-    // 5. Live Countdown Timer
-    const weddingDate = new Date("January 23, 2027 16:30:00").getTime();
-    function runCountdown() {
-      const now = new Date().getTime();
-      const diff = weddingDate - now;
-
-      if (diff > 0) {
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('days').innerText = String(d).padStart(2, '0');
-        document.getElementById('hours').innerText = String(h).padStart(2, '0');
-        document.getElementById('minutes').innerText = String(m).padStart(2, '0');
-        document.getElementById('seconds').innerText = String(s).padStart(2, '0');
-      }
-    }
-    setInterval(runCountdown, 1000);
-    runCountdown();
-
-    // 6. Form RSVP Handler
-    function handleFormSubmit(e) {
-      e.preventDefault();
-
-      confetti({
-        particleCount: 110,
-        spread: 80,
-        origin: { y: 0.7 },
-        colors: ['#C5A059', '#1B382B', '#E8E0D2']
-      });
-
-      document.getElementById('rsvp-form').style.display = 'none';
-      document.getElementById('rsvp-success').style.display = 'block';
-    }
-
-    // 7. Ambient Golden Dust Canvas Animation
-    const canvas = document.getElementById('petal-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * -canvas.height;
-        this.size = Math.random() * 4.5 + 2.5;
-        this.speedX = Math.random() * 0.8 - 0.4;
-        this.speedY = Math.random() * 0.7 + 0.3;
-        this.opacity = Math.random() * 0.4 + 0.2;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.y > canvas.height + 10) this.reset();
-      }
-      draw() {
-        ctx.fillStyle = `rgba(197, 160, 89, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    for (let i = 0; i < 28; i++) {
-      particles.push(new Particle());
-    }
-
-    function renderLoop() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(renderLoop);
-    }
-    renderLoop();
-  </script>
-</body>
-</html>
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 
