@@ -1,875 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wedding Reception | Akshaya & Anand Mahadevan</title>
+  <title>Anand Mahadevan weds Akshaya — Wedding Invitation</title>
+  <meta name="description" content="Join us in the wedding celebrations of Abhishek & Kanika" />
 
-  <!-- Google Fonts: Cormorant Garamond (Serif) & Montserrat (Sans) -->
+  <!-- Google Fonts matching exact City-3 Typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Aboreto&family=Cormorant+Infant:wght@400&family=Cormorant+Unicase:wght@400&family=Cormorant+Upright:wght@400;700&family=Cormorant:wght@400;600&family=Gotu&family=Manrope:wght@600&family=Yaldevi:wght@400&display=swap"
+    rel="stylesheet" />
 
-  <!-- AOS (Animate On Scroll) Library -->
-  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-
-  <!-- Confetti Library -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
-  <!-- Lenis Smooth Momentum Scrolling Library -->
-  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
-
-  <style>
-    :root {
-      --gold: #C5A059;
-      --gold-dark: #8E6B2A;
-      --emerald: #1B382B;
-      --emerald-dark: #12241C;
-      --text-main: #222222;
-      --text-muted: #4A525D;
-      --border-gold: 1px solid rgba(197, 160, 89, 0.4);
-    }
-
-    /* Lenis Smooth Scroll Configuration */
-    html.lenis {
-      height: auto;
-    }
-    .lenis.lenis-smooth {
-      scroll-behavior: auto !important;
-    }
-    .lenis.lenis-smooth [data-lenis-prevent] {
-      overscroll-behavior: contain;
-    }
-    .lenis.lenis-stopped {
-      overflow: hidden;
-    }
-    .lenis.lenis-scrolling iframe {
-      pointer-events: none;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Montserrat', sans-serif;
-      color: var(--text-main);
-      overflow-x: hidden;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Fixed Backdrop Layer (Using backdrop.png) */
-    #bg-backdrop {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-color: #FAF7F2;
-      background-image: url('backdrop.png');
-      background-size: cover;
-      background-position: top center;
-      background-repeat: no-repeat;
-      z-index: 0;
-    }
-
-    /* Soft veil to ensure text readability across the background */
-    #bg-backdrop::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: rgba(250, 247, 242, 0.35);
-    }
-
-    /* Ambient Floating Dust Canvas */
-    #petal-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    /* Floating Music Disc */
-    #music-btn {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: var(--emerald);
-      color: var(--gold);
-      border: 2px solid var(--gold);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
-      cursor: pointer;
-      z-index: 1000;
-      transition: transform 0.3s ease;
-    }
-
-    #music-btn:hover {
-      transform: scale(1.1);
-    }
-
-    #music-btn.playing svg {
-      animation: spinRecord 6s linear infinite;
-    }
-
-    @keyframes spinRecord {
-      100% { transform: rotate(360deg); }
-    }
-
-    /* Envelope Overlay */
-    #envelope-screen {
-      position: fixed;
-      inset: 0;
-      background: var(--emerald-dark);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.85s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.85s;
-      perspective: 1200px;
-    }
-
-    #envelope-screen.opened {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .envelope-box {
-      width: 320px;
-      height: 220px;
-      background: #E8E0D2;
-      border-radius: 6px;
-      position: relative;
-      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transform-style: preserve-3d;
-      transition: transform 0.3s ease;
-    }
-
-    .envelope-box:hover {
-      transform: translateY(-4px);
-    }
-
-    .envelope-flap {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 0;
-      height: 0;
-      border-left: 160px solid transparent;
-      border-right: 160px solid transparent;
-      border-top: 125px solid #DACAB2;
-      transform-origin: top;
-      transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-      z-index: 3;
-    }
-
-    .envelope-box.unfold .envelope-flap {
-      transform: rotateX(180deg);
-      z-index: 1;
-    }
-
-    .wax-seal {
-      width: 58px;
-      height: 58px;
-      background: radial-gradient(circle at 35% 35%, #D4AF37, #8B6508);
-      border-radius: 50%;
-      position: absolute;
-      top: 92px;
-      z-index: 4;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #FFF;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.4rem;
-      font-weight: 700;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .envelope-prompt {
-      color: var(--gold);
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem;
-      letter-spacing: 2px;
-      margin-top: 32px;
-      text-transform: uppercase;
-    }
-
-    /* Main Content Layout */
-    main {
-      position: relative;
-      z-index: 2;
-      max-width: 650px;
-      margin: 0 auto;
-      padding: 60px 20px 120px;
-      text-align: center;
-    }
-
-    /* Sacred Header */
-    .sacred-header {
-      margin-bottom: 20px;
-    }
-
-    .ganesha-symbol {
-      width: 48px;
-      height: 48px;
-      fill: var(--gold-dark);
-      margin: 0 auto 8px;
-      display: block;
-      filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.8));
-    }
-
-    .shloka {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.35rem;
-      color: var(--emerald);
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
-    }
-
-    header {
-      margin-bottom: 40px;
-    }
-
-    .monogram {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      color: var(--gold-dark);
-      letter-spacing: 6px;
-      margin-bottom: 8px;
-      font-weight: 600;
-      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
-    }
-
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 3.4rem;
-      font-weight: 600;
-      color: var(--emerald);
-      line-height: 1.15;
-      margin-bottom: 14px;
-      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9);
-    }
-
-    .reception-badge {
-      display: inline-block;
-      text-transform: uppercase;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      color: var(--gold-dark);
-      border: 1px solid var(--gold);
-      padding: 5px 16px;
-      border-radius: 20px;
-      margin-bottom: 16px;
-      background: rgba(255, 255, 255, 0.5);
-      backdrop-filter: blur(4px);
-    }
-
-    .invite-text {
-      font-size: 1rem;
-      color: var(--text-main);
-      max-width: 500px;
-      margin: 0 auto;
-      line-height: 1.7;
-      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.9);
-    }
-
-    /* Countdown Grid */
-    .countdown-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin: 40px 0;
-      text-align: center;
-    }
-
-    .time-item {
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      padding: 16px 8px;
-      border-radius: 12px;
-      border: var(--border-gold);
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-    }
-
-    .time-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.1rem;
-      font-weight: 700;
-      color: var(--emerald);
-    }
-
-    .time-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-muted);
-      margin-top: 2px;
-      font-weight: 600;
-    }
-
-    h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem;
-      color: var(--emerald);
-      text-align: center;
-      margin: 50px 0 25px;
-      font-weight: 700;
-      text-shadow: 0 2px 8px rgba(255, 255, 255, 0.9);
-    }
-
-    h2::after {
-      content: "";
-      display: block;
-      width: 44px;
-      height: 2px;
-      background: var(--gold-dark);
-      margin: 8px auto 0;
-    }
-
-    /* Itinerary Flow */
-    .itinerary-flow {
-      display: flex;
-      flex-direction: column;
-      gap: 36px;
-      margin: 30px 0 50px;
-      text-align: center;
-    }
-
-    .event-block {
-      background: rgba(255, 255, 255, 0.55);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      padding: 24px 20px;
-      border-radius: 14px;
-      border: 1px solid rgba(197, 160, 89, 0.3);
-    }
-
-    .event-tag {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--gold-dark);
-      margin-bottom: 4px;
-    }
-
-    .event-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: var(--emerald);
-      margin-bottom: 8px;
-    }
-
-    .event-meta {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      margin-bottom: 16px;
-      line-height: 1.6;
-    }
-
-    .event-meta strong {
-      color: var(--text-main);
-    }
-
-    .btn-maps {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.8px;
-      color: var(--gold-dark);
-      text-decoration: none;
-      border: 1px solid var(--gold-dark);
-      padding: 8px 16px;
-      border-radius: 6px;
-      transition: all 0.2s ease;
-      background: rgba(255, 255, 255, 0.8);
-    }
-
-    .btn-maps:hover {
-      background: var(--gold-dark);
-      color: #FFF;
-    }
-
-    /* RSVP Section */
-    .rsvp-section {
-      margin-top: 50px;
-      background: rgba(255, 255, 255, 0.65);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      padding: 36px 24px;
-      border-radius: 16px;
-      border: var(--border-gold);
-    }
-
-    .whatsapp-box {
-      text-align: center;
-      padding: 22px 16px;
-      background: rgba(244, 250, 245, 0.85);
-      border-radius: 12px;
-      border: 1px solid #C8E6C9;
-      margin-bottom: 28px;
-    }
-
-    .whatsapp-box p {
-      font-size: 0.95rem;
-      color: #2E5A36;
-      margin-bottom: 14px;
-      font-weight: 500;
-    }
-
-    .btn-whatsapp {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: #25D366;
-      color: #FFF;
-      text-decoration: none;
-      padding: 14px 28px;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.95rem;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.35);
-      transition: transform 0.2s ease, background 0.2s ease;
-    }
-
-    .btn-whatsapp:hover {
-      background: #1EBE5D;
-      transform: translateY(-2px);
-    }
-
-    /* Form Styles */
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      text-align: left;
-    }
-
-    .form-group {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    label {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--emerald);
-    }
-
-    input, select {
-      padding: 12px 14px;
-      border: 1px solid #C5C5C5;
-      border-radius: 6px;
-      font-family: inherit;
-      font-size: 0.95rem;
-      background: rgba(255, 255, 255, 0.95);
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    input:focus, select:focus {
-      border-color: var(--gold-dark);
-    }
-
-    button.btn-submit {
-      background: var(--emerald);
-      color: #FFF;
-      padding: 15px;
-      border: none;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: background 0.2s, transform 0.1s;
-      margin-top: 6px;
-      width: 100%;
-    }
-
-    button.btn-submit:hover {
-      background: var(--emerald-dark);
-      transform: translateY(-1px);
-    }
-
-    #rsvp-success {
-      display: none;
-      text-align: center;
-      padding: 20px;
-      background: #EDF7EE;
-      color: #1E6B24;
-      border-radius: 6px;
-      margin-top: 16px;
-      font-weight: 500;
-    }
-
-    footer {
-      text-align: center;
-      color: var(--emerald);
-      font-weight: 600;
-      font-size: 0.9rem;
-      padding: 40px 0 20px;
-      text-shadow: 0 1px 6px rgba(255, 255, 255, 0.9);
-    }
-
-    @media (max-width: 600px) {
-      h1 { font-size: 2.6rem; }
-      .countdown-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      main { padding: 40px 16px 80px; }
-    }
-  </style>
+  <link rel="preload" as="image" href="assets/petal.png" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
+  <div id="top" class="page-root">
 
-  <!-- Fixed Backdrop Layer -->
-  <div id="bg-backdrop"></div>
-
-  <!-- Ambient Golden Dust Canvas -->
-  <canvas id="petal-canvas"></canvas>
-
-  <!-- Persistent Floating Music Disc & Custom Song Source -->
-  <div id="music-btn" onclick="toggleAudio()" title="Play / Pause Background Music">
-    <svg id="music-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M9 18V5l12-2v13"></path>
-      <circle cx="6" cy="18" r="3"></circle>
-      <circle cx="18" cy="16" r="3"></circle>
-    </svg>
-  </div>
-  <audio id="bg-audio" loop src="song.mp3"></audio>
-
-  <!-- Interactive Wax-Seal Envelope Screen -->
-  <div id="envelope-screen">
-    <div class="envelope-box" id="envelope" onclick="openInvitation()">
-      <div class="envelope-flap"></div>
-      <div class="wax-seal">A &bull; A</div>
-    </div>
-    <div class="envelope-prompt">Tap Seal to Open Invitation</div>
-  </div>
-
-  <main>
-    <!-- Sacred Auspicious Header -->
-    <div class="sacred-header" data-aos="fade-down" data-aos-duration="1000">
-      <svg class="ganesha-symbol" viewBox="0 0 24 24">
-        <path d="M12 2C8.5 2 6 4.5 6 7.5c0 2 1.2 3.8 3 4.7V17c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2v-4.8c1.8-.9 3-2.7 3-4.7C18 4.5 15.5 2 12 2zm-1 15h2v2h-2v-2zm1-5c-1.7 0-3-1.3-3-3s1.3-3 3-3 3 1.3 3 3-1.3 3-3 3z"/>
-      </svg>
-      <div class="shloka">॥ श्री गणेशाय नमः ॥</div>
-    </div>
-
-    <!-- Couple Monogram & Title -->
-    <header data-aos="fade-up" data-aos-duration="1000" data-aos-delay="150">
-      <div class="monogram">A &bull; A</div>
-      <div class="reception-badge">Wedding Reception</div>
-      <h1>Akshaya<br>&amp; Anand Mahadevan</h1>
-      <p class="invite-text">
-        Together with our families, we cordially invite you to join us in celebrating our wedding reception evening with dinner, music, and cherished blessings.
-      </p>
-    </header>
-
-    <!-- Countdown Timer -->
-    <div class="countdown-grid" data-aos="zoom-in" data-aos-duration="900" data-aos-delay="250">
-      <div class="time-item">
-        <div class="time-num" id="days">00</div>
-        <div class="time-label">Days</div>
-      </div>
-      <div class="time-item">
-        <div class="time-num" id="hours">00</div>
-        <div class="time-label">Hours</div>
-      </div>
-      <div class="time-item">
-        <div class="time-num" id="minutes">00</div>
-        <div class="time-label">Minutes</div>
-      </div>
-      <div class="time-item">
-        <div class="time-num" id="seconds">00</div>
-        <div class="time-label">Seconds</div>
-      </div>
-    </div>
-
-    <!-- Itinerary Flow -->
-    <section>
-      <h2 data-aos="fade-up">Reception Evening Program</h2>
-      <div class="itinerary-flow">
-        <!-- Event 1 -->
-        <div class="event-block" data-aos="fade-up" data-aos-delay="100">
-          <div class="event-tag">Evening Program &bull; Step 1</div>
-          <div class="event-title">Guest Welcome &amp; Refreshments</div>
-          <div class="event-meta">
-            <div><strong>Date &amp; Time:</strong> Saturday, January 23, 2027 &bull; 4:30 PM Onwards</div>
-            <div><strong>Venue:</strong> Grand Celebration Hall</div>
-            <div><strong>Dress Code:</strong> Traditional / Formal Evening Wear</div>
-          </div>
-          <a href="https://maps.google.com/?q=Wedding+Reception+Venue" target="_blank" class="btn-maps">
-            📍 Open in Google Maps
-          </a>
-        </div>
-
-        <!-- Event 2 -->
-        <div class="event-block" data-aos="fade-up" data-aos-delay="200">
-          <div class="event-tag">Celebration &bull; Step 2</div>
-          <div class="event-title">Stage Blessings &amp; Greetings</div>
-          <div class="event-meta">
-            <div><strong>Time:</strong> 5:30 PM Onwards</div>
-            <div><strong>Venue:</strong> Main Auditorium Stage</div>
-            <div><strong>Highlights:</strong> Family felicitation, photo opportunities, and musical interludes</div>
-          </div>
-          <a href="https://maps.google.com/?q=Wedding+Reception+Venue" target="_blank" class="btn-maps">
-            📍 Open in Google Maps
-          </a>
-        </div>
-
-        <!-- Event 3 -->
-        <div class="event-block" data-aos="fade-up" data-aos-delay="300">
-          <div class="event-tag">Celebration &bull; Step 3</div>
-          <div class="event-title">Grand Reception Feast</div>
-          <div class="event-meta">
-            <div><strong>Time:</strong> 7:30 PM Onwards</div>
-            <div><strong>Venue:</strong> The Banquet Lawns</div>
-            <div><strong>Menu:</strong> Traditional multi-course feast and dessert buffet</div>
-          </div>
-          <a href="https://maps.google.com/?q=Wedding+Reception+Venue" target="_blank" class="btn-maps">
-            📍 Open in Google Maps
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- RSVP Section -->
-    <section class="rsvp-section" data-aos="fade-up">
-      <h2>Kindly RSVP</h2>
-
-      <div class="whatsapp-box">
-        <p>Confirm attendance directly via WhatsApp:</p>
-        <a 
-          href="https://wa.me/919876543210?text=Hi%20Akshaya%20%26%20Anand!%20I%20will%20be%20attending%20your%20wedding%20reception.%20Name:%20%20%7C%20Number%20of%20Guests:%20" 
-          target="_blank" 
-          class="btn-whatsapp"
-        >
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+    <!-- ====================================================================
+         1. FLOATING MUSIC TOGGLE BUTTON
+         ==================================================================== -->
+    <div class="music-sticky-bar" aria-label="Background Music Controls">
+      <div class="music-btn-wrapper">
+        <button id="music-toggle-btn" class="music-btn" type="button" aria-label="Play music">
+          <audio id="wedding-audio" src="assets/music.mp3" loop preload="metadata"></audio>
+          <svg id="music-icon-svg" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M 5.379 1.292 C 4.968 1.033 4.449 1.017 4.023 1.251 C 3.598 1.486 3.334 1.933 3.333 2.419 L 3.333 13.581 C 3.334 14.067 3.598 14.514 4.023 14.749 C 4.449 14.983 4.968 14.967 5.379 14.708 L 14.215 9.127 C 14.602 8.883 14.836 8.457 14.836 8 C 14.836 7.543 14.602 7.117 14.215 6.873 Z"
+              fill="#333" />
           </svg>
-          RSVP on WhatsApp
-        </a>
+        </button>
       </div>
+    </div>
 
-      <form id="rsvp-form" onsubmit="handleFormSubmit(event)">
-        <div class="form-group">
-          <label for="name">Guest Name</label>
-          <input type="text" id="name" required placeholder="Your full name" />
+    <!-- ====================================================================
+         2. MAIN CONTAINER (max-width: 1500px)
+         ==================================================================== -->
+    <main class="main-container">
+
+      <!-- ==================================================================
+           SECTION 1: HERO, INVITE DETAILS & 6 WEDDING EVENTS
+           ================================================================== -->
+      <section class="section-1" aria-label="Hero and Wedding Invitation">
+
+        <!-- Sky Layer 1 (Base Sky) -->
+        <div class="hero-sky-1">
+          <div class="bg-wrapper bg-top">
+            <picture>
+              <source media="(max-width: 1399.98px)" srcset="assets/sky-1-mobile.png" />
+              <img src="assets/sky-1-desktop.png" alt="" decoding="async" />
+            </picture>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="attending">Attending?</label>
-          <select id="attending" required>
-            <option value="yes">Accepts with pleasure</option>
-            <option value="no">Declines with regret</option>
-          </select>
+        <!-- Sky Layer 2 (Cross-Fades in over 8.5s) -->
+        <div id="hero-sky-2" class="hero-sky-2">
+          <div class="bg-wrapper bg-top">
+            <picture>
+              <source media="(max-width: 1399.98px)" srcset="assets/sky-2-mobile.jpg" />
+              <img src="assets/sky-2-desktop.png" alt="" decoding="async" />
+            </picture>
+          </div>
         </div>
 
-        <div class="form-group">
-          <label for="guests">Party Size</label>
-          <select id="guests">
-            <option value="1">1 Person</option>
-            <option value="2">2 Persons</option>
-            <option value="3+">Family (3+)</option>
-          </select>
+        <!-- Couple's Names with Scroll Parallax & Staggered Tilt Entrance -->
+        <div id="hero-couple-container" class="hero-couple-container">
+          <div class="hero-couple-names">
+            <p id="hero-groom" class="hero-word word-groom">Abhishek</p>
+            <p id="hero-weds" class="hero-word word-weds">weds</p>
+            <p id="hero-bride" class="hero-word word-bride">Kanika</p>
+          </div>
         </div>
 
-        <button type="submit" class="btn-submit">Submit Details</button>
-      </form>
+        <!-- 240Hz Falling Petals Canvas (Starts showering immediately from top) -->
+        <div id="petals-canvas-container" class="petals-canvas-container">
+          <canvas id="petals-canvas"></canvas>
+        </div>
 
-      <div id="rsvp-success">
-        Thank you! Your response has been recorded. We look forward to celebrating together!
-      </div>
-    </section>
+        <!-- Architectural Palace Structure -->
+        <div id="hero-structure" class="hero-structure">
+          <div class="bg-wrapper">
+            <picture>
+              <source media="(max-width: 809.98px)" srcset="assets/palace-mobile.png" />
+              <img src="assets/palace-desktop.png" alt="Wedding Palace Illustration" decoding="async" />
+            </picture>
+          </div>
+        </div>
 
-    <footer>
-      With Love, Akshaya &amp; Anand Mahadevan &bull; 2027
-    </footer>
-  </main>
+        <!-- Unified Mandala Medallions Section with Single Continuous dream.jpg Background -->
+        <div class="invite-and-events">
+          <!-- Single Continuous Dream Background Layer -->
+          <div class="bg-wrapper">
+            <img src="assets/dream.jpg" alt="" decoding="async" />
+          </div>
 
-  <!-- AOS Script -->
-  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+          <!-- Mandala Design 1: Location CTA (See the Route) -->
+          <div id="location" class="cta-sticky-section cta-location-section">
+            <div class="cta-scroll-mover">
+              <div class="mandala-medallion mandala-location">
+                <!-- Layer 1: Rotating Outer Mandala Ring -->
+                <div class="mandala-ring-outer" data-mandala-ring>
+                  <img id="cta-location-ring-img" src="assets/mandala-ring-location.png" alt="" loading="lazy"
+                    decoding="async" />
+                </div>
+                <!-- Layer 2: Static Inner Medallion Circle -->
+                <div class="mandala-circle-inner">
+                  <img id="cta-location-inner-img" src="assets/mandala-inner-location.png" alt="" loading="lazy"
+                    decoding="async" />
+                </div>
+                <!-- Layer 3: Centered Text & Action Link -->
+                <div class="mandala-content">
+                  <a id="cta-location-btn" class="cta-text-block cta-text-link" href="https://maps.google.com" target="_blank"
+                    rel="noopener noreferrer" aria-label="Open venue location on Google Maps">
+                    <h2 id="cta-location-headline" class="cta-headline">See the&#10;route</h2>
+                    <p id="cta-location-subtext" class="cta-subtext">Click to open the map</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
 
-  <script>
-    // 1. Initialize Lenis Momentum Smooth Scrolling
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothTouch: true
-    });
+          <!-- Mandala Design 2: RSVP on WhatsApp -->
+          <div id="rsvp" class="cta-sticky-section cta-rsvp-section">
+            <div class="cta-scroll-mover">
+              <div class="mandala-medallion mandala-rsvp">
+                <!-- Layer 1: Rotating Outer Mandala Ring -->
+                <div class="mandala-ring-outer" data-mandala-ring>
+                  <img id="cta-rsvp-ring-img" src="assets/mandala-ring-rsvp.png" alt="" loading="lazy" decoding="async" />
+                </div>
+                <!-- Layer 2: Static Inner Medallion Circle -->
+                <div class="mandala-circle-inner">
+                  <img id="cta-rsvp-inner-img" src="assets/mandala-inner-rsvp.png" alt="" loading="lazy"
+                    decoding="async" />
+                </div>
+                <!-- Layer 3: Centered Text & Action Link -->
+                <div class="mandala-content">
+                  <a id="cta-rsvp-btn" class="cta-text-block cta-text-link"
+                    href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer"
+                    aria-label="Click to RSVP on WhatsApp">
+                    <h2 id="cta-rsvp-headline" class="cta-headline">Please&#10;rsvp</h2>
+                    <p id="cta-rsvp-subtext" class="cta-subtext">Click to message on WhatsApp</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+          <!-- Mandala Design 3: Instagram CTA -->
+          <div id="instagram" class="cta-sticky-section cta-instagram-section">
+            <div class="cta-scroll-mover">
+              <div class="mandala-medallion mandala-instagram">
+                <!-- Layer 1: Rotating Outer Mandala Ring -->
+                <div class="mandala-ring-outer" data-mandala-ring>
+                  <img id="cta-instagram-ring-img" src="assets/mandala-ring-instagram.png" alt="" loading="lazy"
+                    decoding="async" />
+                </div>
+                <!-- Layer 2: Static Inner Medallion Circle -->
+                <div class="mandala-circle-inner">
+                  <img id="cta-instagram-inner-img" src="assets/mandala-inner-instagram.png" alt="" loading="lazy"
+                    decoding="async" />
+                </div>
+                <!-- Layer 3: Centered Text & Action Link -->
+                <div class="mandala-content">
+                  <a id="cta-instagram-btn" class="cta-text-block cta-text-link"
+                    href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                    aria-label="Open our Instagram page">
+                    <h2 id="cta-instagram-headline" class="cta-headline">Follow the&#10;action</h2>
+                    <p id="cta-instagram-subtext" class="cta-subtext">Click to open our Instagram page</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    // 2. Initialize AOS (Animate On Scroll)
-    AOS.init({
-      once: true,
-      offset: 40,
-      duration: 800,
-      easing: 'ease-out-cubic'
-    });
+    </main>
+  </div>
 
-    // 3. Audio Controller Logic
-    const audio = document.getElementById('bg-audio');
-    const musicBtn = document.getElementById('music-btn');
-    let isPlaying = false;
-
-    function toggleAudio() {
-      if (isPlaying) {
-        audio.pause();
-        musicBtn.classList.remove('playing');
-      } else {
-        audio.play().catch(e => console.log("Audio waiting for user gesture"));
-        musicBtn.classList.add('playing');
-      }
-      isPlaying = !isPlaying;
-    }
-
-    // 4. Envelope Unfold with AOS.refreshHard()
-    function openInvitation() {
-      const envelope = document.getElementById('envelope');
-      const screen = document.getElementById('envelope-screen');
-
-      envelope.classList.add('unfold');
-
-      audio.play().then(() => {
-        isPlaying = true;
-        musicBtn.classList.add('playing');
-      }).catch(e => {});
-
-      setTimeout(() => {
-        screen.classList.add('opened');
-        
-        confetti({
-          particleCount: 65,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#C5A059', '#1B382B', '#FFFFFF']
-        });
-
-        AOS.refreshHard();
-      }, 750);
-    }
-
-    // 5. Live Countdown Timer: January 23, 2027 at 16:30:00
-    const receptionDate = new Date("January 23, 2027 16:30:00").getTime();
-    function runCountdown() {
-      const now = new Date().getTime();
-      const diff = receptionDate - now;
-
-      if (diff > 0) {
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const s = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('days').innerText = String(d).padStart(2, '0');
-        document.getElementById('hours').innerText = String(h).padStart(2, '0');
-        document.getElementById('minutes').innerText = String(m).padStart(2, '0');
-        document.getElementById('seconds').innerText = String(s).padStart(2, '0');
-      } else {
-        document.getElementById('days').innerText = "00";
-        document.getElementById('hours').innerText = "00";
-        document.getElementById('minutes').innerText = "00";
-        document.getElementById('seconds').innerText = "00";
-      }
-    }
-    setInterval(runCountdown, 1000);
-    runCountdown();
-
-    // 6. Form RSVP Handler
-    function handleFormSubmit(e) {
-      e.preventDefault();
-
-      confetti({
-        particleCount: 110,
-        spread: 80,
-        origin: { y: 0.7 },
-        colors: ['#C5A059', '#1B382B', '#E8E0D2']
-      });
-
-      document.getElementById('rsvp-form').style.display = 'none';
-      document.getElementById('rsvp-success').style.display = 'block';
-    }
-
-    // 7. Ambient Golden Dust Canvas Animation
-    const canvas = document.getElementById('petal-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    class Particle {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * -canvas.height;
-        this.size = Math.random() * 4.5 + 2.5;
-        this.speedX = Math.random() * 0.8 - 0.4;
-        this.speedY = Math.random() * 0.7 + 0.3;
-        this.opacity = Math.random() * 0.4 + 0.2;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.y > canvas.height + 10) this.reset();
-      }
-      draw() {
-        ctx.fillStyle = `rgba(197, 160, 89, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
-      }
-    }
-
-    for (let i = 0; i < 28; i++) {
-      particles.push(new Particle());
-    }
-
-    function renderLoop() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(renderLoop);
-    }
-    renderLoop();
-  </script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
 </body>
+
 </html>
